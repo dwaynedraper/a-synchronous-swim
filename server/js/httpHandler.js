@@ -14,7 +14,22 @@ module.exports.initialize = (queue) => {
 
 module.exports.router = (req, res, next = ()=>{}) => {
   console.log('Serving request type ' + req.method + ' for url ' + req.url);
-  res.writeHead(200, headers);
-  res.end();
+
+  if (req.method === 'OPTIONS') {
+
+  }
+
+  if (req.method === 'GET' && req.url === '/confused') {
+    console.log('success');
+    const commands = ['up', 'down', 'left', 'right'];
+    let index = Math.floor((Math.random() * 4) + 1);
+    res.writeHead(200, headers);
+    res.end(commands[index]);
+  } else {
+    console.log('failure');
+    res.writeHead(200, headers);
+    res.end();
+  }
+
   next(); // invoke next() at the end of a request to help with testing!
 };
