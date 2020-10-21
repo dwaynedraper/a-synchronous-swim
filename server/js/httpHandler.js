@@ -19,7 +19,10 @@ module.exports.router = (req, res, next = ()=>{}) => {
 
   }
 
-  if (req.method === 'GET' && req.url === '/') {
+  //NOTE: Figure out how to use url to catch GET request
+  //Need to fill out a full url in this if block
+
+  if (req.method === 'GET' && req.url === '/?...') {
     const commands = ['up', 'down', 'left', 'right'];
     let index = Math.floor((Math.random() * 4));
     res.writeHead(200, headers);

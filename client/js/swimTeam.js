@@ -1,4 +1,4 @@
-const SwimTeam = {
+export default const SwimTeam = {
 
   // direction, start and max all need to match the CSS
   direction: 'left',
@@ -65,7 +65,7 @@ const SwimTeam = {
         SwimTeam.coords.left += 5;
       }
       break;
-    } 
+    }
   }
 
 };

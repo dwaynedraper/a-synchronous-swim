@@ -1,3 +1,5 @@
+import swimTeam from './swimTeam';
+
 (function() {
 
   const serverUrl = 'http://127.0.0.1:3000';
@@ -5,7 +7,18 @@
   //
   // TODO: build the swim command fetcher here
   //
+const swimCommandFetcher = () => {
+  $.ajax({
+    type: 'GET',
+    url: serverUrl,
+    success: (command) => SwimTeam.move(command)
+  });
+};
+// NOTE: Still need to link swimCommandFetcher to the server if block
+// I think we use data as another field in $.ajax
+//
 
+// setInterval(swimCommandFetcher, 100);
   /////////////////////////////////////////////////////////////////////
   // The ajax file uplaoder is provided for your convenience!
   // Note: remember to fix the URL below.
@@ -17,7 +30,7 @@
     $.ajax({
       type: 'POST',
       data: formData,
-      url: 'FILL_ME_IN',
+      url: 'serverUrl',
       cache: false,
       contentType: false,
       processData: false,
