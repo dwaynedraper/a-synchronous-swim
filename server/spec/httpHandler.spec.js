@@ -29,7 +29,8 @@ describe('server responses', () => {
     httpHandler.router(req, res);
     expect(res._responseCode).to.equal(200);
     expect(res._ended).to.equal(true);
-    expect(commands).to.contain(res._data.toString());
+    console.log(res);
+    expect(res._data.toString()).to.be.oneOf(commands);
     done();
   });
 

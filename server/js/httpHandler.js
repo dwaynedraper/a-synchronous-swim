@@ -19,14 +19,12 @@ module.exports.router = (req, res, next = ()=>{}) => {
 
   }
 
-  if (req.method === 'GET' && req.url === '/confused') {
-    console.log('success');
+  if (req.method === 'GET' && req.url === '/') {
     const commands = ['up', 'down', 'left', 'right'];
-    let index = Math.floor((Math.random() * 4) + 1);
+    let index = Math.floor((Math.random() * 4));
     res.writeHead(200, headers);
     res.end(commands[index]);
   } else {
-    console.log('failure');
     res.writeHead(200, headers);
     res.end();
   }
