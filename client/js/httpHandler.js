@@ -1,4 +1,4 @@
-import swimTeam from './swimTeam';
+// import swimTeam from './swimTeam';
 
 (function() {
 
@@ -10,6 +10,7 @@ import swimTeam from './swimTeam';
 const swimCommandFetcher = () => {
   $.ajax({
     type: 'GET',
+    data: {commands: 'random'},
     url: serverUrl,
     success: (command) => SwimTeam.move(command)
   });
@@ -18,7 +19,7 @@ const swimCommandFetcher = () => {
 // I think we use data as another field in $.ajax
 //
 
-// setInterval(swimCommandFetcher, 100);
+setInterval(swimCommandFetcher, 2000);
   /////////////////////////////////////////////////////////////////////
   // The ajax file uplaoder is provided for your convenience!
   // Note: remember to fix the URL below.

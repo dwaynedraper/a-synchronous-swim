@@ -23,7 +23,7 @@ describe('server responses', () => {
 
   it('should respond to a GET request for a swim command', (done) => {
     // write your test here
-    let {req, res} = server.mock('/', 'GET');
+    let {req, res} = server.mock('/?commands=random', 'GET');
 
     const commands = ['up', 'down', 'left', 'right'];
     httpHandler.router(req, res);

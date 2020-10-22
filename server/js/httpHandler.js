@@ -15,14 +15,10 @@ module.exports.initialize = (queue) => {
 module.exports.router = (req, res, next = ()=>{}) => {
   console.log('Serving request type ' + req.method + ' for url ' + req.url);
 
-  if (req.method === 'OPTIONS') {
-
-  }
-
   //NOTE: Figure out how to use url to catch GET request
   //Need to fill out a full url in this if block
 
-  if (req.method === 'GET' && req.url === '/?...') {
+  if (req.method === 'GET' && req.url === '/?commands=random') {
     const commands = ['up', 'down', 'left', 'right'];
     let index = Math.floor((Math.random() * 4));
     res.writeHead(200, headers);
