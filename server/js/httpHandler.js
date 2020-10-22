@@ -2,6 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const headers = require('./cors');
 const multipart = require('./multipartUtils');
+const keypressHandler = require('./keypressHandler');
+const messages = require('./messageQueue');
 
 // Path for the background image ///////////////////////
 module.exports.backgroundImageFile = path.join('.', 'background.jpg');
@@ -18,11 +20,10 @@ module.exports.router = (req, res, next = ()=>{}) => {
   //NOTE: Figure out how to use url to catch GET request
   //Need to fill out a full url in this if block
 
-  if (req.method === 'GET' && req.url === '/?commands=random') {
-    const commands = ['up', 'down', 'left', 'right'];
-    let index = Math.floor((Math.random() * 4));
+  if (req.method === 'GET' && req.url === '/') {
     res.writeHead(200, headers);
-    res.end(commands[index]);
+    let command = messages.dequeue();
+    res.end(command);
   } else {
     res.writeHead(200, headers);
     res.end();

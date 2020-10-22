@@ -1,5 +1,7 @@
 const _ = require('underscore');
 const keypress = require('keypress');
+const httpHandler = require('./httpHandler.js');
+const messages = require('./messageQueue');
 
 ///////////////////////////////////////////////////////////////////////////////
 // Utility Function ///////////////////////////////////////////////////////////
@@ -30,6 +32,7 @@ module.exports.initialize = (callback) => {
 
   // setup an event handler on standard input
   process.stdin.on('keypress', (chunk, key) => {
+
     // ctrl+c should quit the program
     if (key && key.ctrl && key.name === 'c') {
       process.exit();
@@ -37,10 +40,12 @@ module.exports.initialize = (callback) => {
 
     // check to see if the keypress itself is a valid message
     if (isValidMessage(key.name)) {
+      messages.enqueue(key.name);
+      // console.log(key.name);
       callback(key.name);
       return; // don't do any more processing on this key
     }
-    
+
     // otherwise build up a message from individual characters
     if (key && (key.name === 'return' || key.name === 'enter')) {
       // on enter, process the message

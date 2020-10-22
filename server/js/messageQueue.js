@@ -1,3 +1,5 @@
+const httpHandler = require('./httpHandler.js');
+const keypressHandler = require('./keypressHandler.js');
 const messages = []; // the storage unit for messages
 
 module.exports.enqueue = (message) => {
