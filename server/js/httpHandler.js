@@ -24,10 +24,28 @@ module.exports.router = (req, res, next = ()=>{}) => {
     res.writeHead(200, headers);
     let command = messages.dequeue();
     res.end(command);
-  } else {
+    next();
+  } else if (req.method === 'GET' && req.url === '/background.jpg') {
+    fs.readFile(module.exports.backgroundImageFile, (err, data) => {
+      if (err) {
+        res.writeHead(404, headers);
+        res.end();
+        // Display the file content
+        console.log(data);
+        next();
+      } else {
+        res.writeHead(200, headers);
+        res.write(data);
+        res.end();
+        next();
+      }
+    });
+  }
+  if (req.method === 'OPTIONS'){
     res.writeHead(200, headers);
     res.end();
+    next();
   }
 
-  next(); // invoke next() at the end of a request to help with testing!
+  // next(); // invoke next() at the end of a request to help with testing!
 };
