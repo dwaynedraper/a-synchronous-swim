@@ -5,6 +5,7 @@ const multipart = require('./multipartUtils');
 const keypressHandler = require('./keypressHandler');
 const messages = require('./messageQueue');
 
+console.log(__dirname);
 // Path for the background image ///////////////////////
 module.exports.backgroundImageFile = path.join('.', 'background.jpg');
 ////////////////////////////////////////////////////////
@@ -19,7 +20,33 @@ module.exports.router = (req, res, next = ()=>{}) => {
 
   //NOTE: Figure out how to use url to catch GET request
   //Need to fill out a full url in this if block
+  if (req.method === 'POST' && req.url === '/') {
+    //create a buffer with alloc() and build it with concat
+    let imageFile = Buffer.alloc(0);
+    req.on('data', (chunk) => { return imageFile = Buffer.concat([imageFile, chunk]) });
+    console.log('imagefile', imageFile);
 
+    req.on('end', () => {
+      let file = multipart.getFile(imageFile);
+      console.log('file', file)
+      fs.writeFile(module.exports.backgroundImageFile, file.data, 'binary', (err, data) => {
+        if (err) {
+          res.writeHead(404, headers);
+          res.end();
+          next();
+        } else {
+          res.writeHead(201, headers);
+          res.write(module.exports.backgroundImageFile);
+          res.end();
+          next();
+        }
+      });
+    });
+    req.on('error', (err) => {
+      // This prints the error message and stack trace to `stderr`.
+      console.error(err.stack);
+    });
+  }
   if (req.method === 'GET' && req.url === '/') {
     res.writeHead(200, headers);
     let command = messages.dequeue();

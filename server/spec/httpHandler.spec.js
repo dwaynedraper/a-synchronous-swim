@@ -53,6 +53,7 @@ describe('server responses', () => {
       expect(res._ended).to.equal(true);
     done();
   });
+});
 
   var postTestFile = path.join('.', 'spec', 'water-lg.jpg');
 

@@ -18,7 +18,7 @@ const swimCommandFetcher = () => {
 // I think we use data as another field in $.ajax
 //
 
-setInterval(swimCommandFetcher, 100);
+// setInterval(swimCommandFetcher, 100);
   /////////////////////////////////////////////////////////////////////
   // The ajax file uplaoder is provided for your convenience!
   // Note: remember to fix the URL below.
@@ -30,7 +30,7 @@ setInterval(swimCommandFetcher, 100);
     $.ajax({
       type: 'POST',
       data: formData,
-      url: 'serverUrl',
+      url: serverUrl,
       cache: false,
       contentType: false,
       processData: false,
