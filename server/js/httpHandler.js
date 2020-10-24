@@ -24,19 +24,18 @@ module.exports.router = (req, res, next = ()=>{}) => {
     //create a buffer with alloc() and build it with concat
     let imageFile = Buffer.alloc(0);
     req.on('data', (chunk) => { return imageFile = Buffer.concat([imageFile, chunk]) });
-    console.log('imagefile', imageFile);
 
     req.on('end', () => {
-      let file = multipart.getFile(imageFile);
-      console.log('file', file)
-      fs.writeFile(module.exports.backgroundImageFile, file.data, 'binary', (err, data) => {
+      let assembledFile = multipart.getFile(imageFile);
+      console.log('assembled', assembledFile);
+      fs.writeFile(module.exports.backgroundImageFile, assembledFile.data, 'binary', (err, data) => {
         if (err) {
           res.writeHead(404, headers);
           res.end();
           next();
         } else {
           res.writeHead(201, headers);
-          res.write(module.exports.backgroundImageFile);
+          //res.write(module.exports.backgroundImageFile);
           res.end();
           next();
         }
@@ -45,6 +44,7 @@ module.exports.router = (req, res, next = ()=>{}) => {
     req.on('error', (err) => {
       // This prints the error message and stack trace to `stderr`.
       console.error(err.stack);
+      next();
     });
   }
   if (req.method === 'GET' && req.url === '/') {
